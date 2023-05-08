@@ -1,16 +1,47 @@
-# This is a sample Python script.
+import discord
+import random
+from db import *
+from nodb import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# initialize discord bot
+intents = discord.Intents.default()
+intents.message_content = True
+bot = discord.Client(intents=intents)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@bot.event
+async def on_ready():
+    print(f"We have logged in as {bot.user}")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    if message.content.startswith("$hello"):
+        await message.channel.send("Hello!")
+        return
+
+    # get random quote
+    if message.content.startswith("$inspire"):
+        quote = get_quote()
+        await message.channel.send(quote)
+        return
+
+    if message.content.startswith("$new"):
+        cmd = message.content.split(" ", 2)[1]
+        if cmd == "sad_word":
+            print("test")
+            print(message.content.split(" ", 2)[2])
+            add_sad(message.content.split(" ", 2)[2])
+        return
+
+    # emotional response
+    for word in message.content.split():
+        response = respond(word)
+        if response is not None:
+            await message.channel.send(response)
+
+
+bot.run("MTEwNTE2MDA3NTU1Mjc3MjIyNw.GABpu_.JPvp0odWvj20zqHxzKRnbdvhcJHsiClOO5OznU")
