@@ -19,22 +19,42 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
+    # $hello
     if message.content.startswith("$hello"):
         await message.channel.send("Hello!")
         return
 
-    # get random quote
+    # $inspire
     if message.content.startswith("$inspire"):
-        quote = get_quote()
-        await message.channel.send(quote)
+        inspo = get_inspo()
+        await message.channel.send(inspo)
         return
 
+    # $quote
+    if message.content.startswith("$quote"):
+        author = message.content.split("$quote ", 1)[1]
+        quote = get_quote(author)
+        if quote is not None:
+            await message.channel.send(quote)
+        else:
+            await message.channel.send("Invalid author...try again")
+
+
+
+    # $new
     if message.content.startswith("$new"):
         cmd = message.content.split(" ", 2)[1]
+        arg = message.content.split(" ", 2)[2]
         if cmd == "sad_word":
-            print("test")
-            print(message.content.split(" ", 2)[2])
-            add_sad(message.content.split(" ", 2)[2])
+            add_sad(arg)
+        elif cmd == "angry_word":
+            add_angry(arg)
+        elif cmd == "encouraging_phrase":
+            add_encourage(arg)
+        elif cmd == "calming_phrase":
+            add_calm(arg)
+        elif cmd == "quote":
+            add_quote(arg)
         return
 
     # emotional response
@@ -43,5 +63,4 @@ async def on_message(message):
         if response is not None:
             await message.channel.send(response)
 
-
-bot.run("MTEwNTE2MDA3NTU1Mjc3MjIyNw.GABpu_.JPvp0odWvj20zqHxzKRnbdvhcJHsiClOO5OznU")
+bot.run("MTEwNTE2MDA3NTU1Mjc3MjIyNw.GeYQzs.ZbxwuZHu7cK4BZuDZj0qfCdYrC5L3WJONa1lBg")
