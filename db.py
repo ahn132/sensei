@@ -56,6 +56,8 @@ if "responses" not in mongo.list_database_names():
 # database for quotes
 quotes_db = mongo["quotes"]
 
+#database for users
+user_db = mongo["users"]
 
 
 def respond(word):
@@ -75,20 +77,24 @@ def add_sad(word):
     if sad.find_one({"word": word}) is None:
         sad.insert_one({"_id": sad.count_documents({}), "word": word})
 
+
 # adds an angry word to the database
 def add_angry(word):
     if angry.find_one({"word": word}) is None:
         angry.insert_one({"_id": angry.count_documents({}), "word": word})
+
 
 # adds an encouraging phrase to the database
 def add_encourage(response):
     if encourage.find_one({"response": response}) is None:
         encourage.insert_one({"_id": encourage.count_documents({}), "response": response})
 
+
 # adds a calming phrase to the database
 def add_calm(response):
     if calm.find_one({"response": response}) is None:
         calm.insert_one({"_id": calm.count_documents({}), "response": response})
+
 
 def add_quote(string):
     quote = string.split("-")
@@ -106,6 +112,7 @@ def add_quote(string):
         if author_col.find_one({"content": quote[0]}) is None:
             author_col.insert_one({"_id": author_col.count_documents({}), "content": quote[0], "label": quote[1]})
 
+
 def get_quote(target):
     found = False
     for author in quotes_db.list_collections():
@@ -121,12 +128,17 @@ def get_quote(target):
         return None
 
 
+def set_token(user, token):
+    tokens = user_db["tokens"]
+    if tokens.find_one({"user": user}) is None:
+        tokens.insert_one({"user": user, "token": token})
+    else:
+        tokens.update_one({"user": user}, {"$set": {"token": token}})
 
 
-
-
-
-
-
-
-
+def get_token(user):
+    tokens = user_db["tokens"]
+    if tokens.find_one({"user": user}) is None:
+        return None
+    else:
+        return tokens.find_one({"user": user})["token"]
