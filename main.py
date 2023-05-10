@@ -82,4 +82,4 @@ async def on_message(message):
         if response is not None:
             await message.channel.send(response)
 
-bot.run("MTEwNTE2MDA3NTU1Mjc3MjIyNw.GeYQzs.ZbxwuZHu7cK4BZuDZj0qfCdYrC5L3WJONa1lBg")
+bot.run("PASTE YOUR DISCORD BOT TOKEN HERE")
