@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
 # initialize mongodb client
-uri = "mongodb+srv://sunahn76:MONGO@cluster0.theov4s.mongodb.net/?retryWrites=true&w=majority"
+uri = "PASTE YOUR MONGODB ATLAS CONNECTION STRING HERE"
 mongo = MongoClient(uri, server_api=ServerApi('1'))
 try:
     mongo.admin.command('ping')
