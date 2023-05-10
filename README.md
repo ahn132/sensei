@@ -1,6 +1,8 @@
 # sensei
 A Discord bot written in Python utilizing PyMongo and MongoDB Atlas to store data
 
+To use this bot, please follow the instructions on https://discord.com/developers/docs/getting-started to create your bot and get its token. Then copy and paste your token into the last line of main.py. Then, follow the instructions on https://www.mongodb.com/docs/atlas/getting-started/ to create a cluster in MongoDB Atlas. When you get your connection string, copy it into line 8 of db.py. After that, you should be good to go!
+
 ## Commands
 
 `/hello` 
